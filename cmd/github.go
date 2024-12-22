@@ -1,15 +1,12 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"strings"
 )
 
-func Logic(repoUrl, branch string) {
+func Logic(repoUrl, branch, initGit, destination string) {
 	gitUrl := strings.Split(repoUrl, "/")
 
 	// gitURL e.g. = https://github.com/1Shubham7/templ8
@@ -19,6 +16,7 @@ func Logic(repoUrl, branch string) {
 	fmt.Println("init branch:" + branch)
 	fmt.Println("init username:" + username)
 
+	// if branch not specified
 	if branch == "" {
 		defBranch, err := GetDefaultBranch(username, reponame)
 		if err != nil {
@@ -52,6 +50,53 @@ func Logic(repoUrl, branch string) {
 
 	// download acrhive repo
 	fileUrl := "https://github.com/" + username + "/" + reponame + "/archive/refs/heads/" + branch + ".zip"
-	zipPath := tempDir + "/" + "file.zip"}
-	DownloadFile(zipPath, fileUrl)
+	zipPath := tempDir + "/" + "file.zip"
+	err = DownloadFile(zipPath, fileUrl)
+	if err != nil {
+		panic(err)
+	}
+
+	// unzip the file
+	unzipPath := tempDir + "/" + "unzipped"
+	_, err = Unzip(zipPath, unzipPath)
+	if err != nil {
+		panic(err)
+	}
+
+	files, err := os.ReadDir(unzipPath)
+	if err != nil {
+		panic(err)
+	}
+	repoDir := files[0]
+
+	var destPath string
+
+	// if destination not specified
+	if destination == "" {
+		destPath = reponame
+	} else {
+		destPath = destination
+	}
+
+	// move the folder
+	repoDirPath := unzipPath + "/" + repoDir.Name()
+	// moves file in param 1 file to param 2
+	err = os.Rename(repoDirPath, "./" + destPath)
+	if err != nil {
+		panic(err)
+	}
+
+	// remove the temp folder
+	defer os.RemoveAll(tempDir)
+
+	// Init git 
+	isGitInstalled := CheckIsGitInstalled()
+	if isGitInstalled == false {
+		fmt.Println("git not found. Repository will not be intialized automatically.")
+	}
+
+
+	if isGitInstalled && initGit == "yes" {
+		InitGit(destPath)
+	}
 }

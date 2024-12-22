@@ -4,8 +4,10 @@ Copyright © 2024 Shubham Singh <shubhammahar1306@gmail.com>
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -43,7 +45,11 @@ Happy coding! ✨
 			fmt.Println("GitHub repo is required")
 			return
 		}
-		Logic(args[0], branchName)
+		reader := bufio.NewReader(os.Stdin)
+			fmt.Print("Do you want to init git? (yes/no): ")
+			input, _ := reader.ReadString('\n')
+			input = strings.TrimSpace(strings.ToLower(input))
+		Logic(args[0], branchName, input, dir)
 	},
 }
 

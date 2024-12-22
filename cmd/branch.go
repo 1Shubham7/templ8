@@ -12,6 +12,7 @@ type GitHubResponse struct {
 
 func GetDefaultBranch(username, repo string) (string, error) {
 	response, err := http.Get("https://api.github.com/repos/" + username + "/" + repo)
+	defer response.Body.Close()
 	if err != nil {
 		return "", err
 	}
