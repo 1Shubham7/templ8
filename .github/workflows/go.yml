@@ -21,12 +21,13 @@ jobs:
     - name: Build
       run: go build -v -o app/templ8.exe
 
-    - name: New release
-      uses: actions/create-release@v1
+    - name: Create a Release
+      uses: elgohr/Github-Release-Action@v5
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
+        title: Release ${{ github.ref }}
+        tag: ${{ github.ref }}
+        permissions:
+        packages: write
+        contents: write
