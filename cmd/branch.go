@@ -17,7 +17,7 @@ func GetDefaultBranch(username, repo string) (string, error) {
 		return "", err
 	}
 
-	data,_ := io.ReadAll(response.Body)
+	data, _ := io.ReadAll(response.Body)
 	var repoDetails GitHubResponse
 	err = json.Unmarshal(data, &repoDetails)
 	if err != nil {

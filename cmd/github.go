@@ -81,7 +81,7 @@ func Logic(repoUrl, branch, initGit, destination string) {
 	// move the folder
 	repoDirPath := unzipPath + "/" + repoDir.Name()
 	// moves file in param 1 file to param 2
-	err = os.Rename(repoDirPath, "./" + destPath)
+	err = os.Rename(repoDirPath, "./"+destPath)
 	if err != nil {
 		panic(err)
 	}
@@ -89,12 +89,11 @@ func Logic(repoUrl, branch, initGit, destination string) {
 	// remove the temp folder
 	defer os.RemoveAll(tempDir)
 
-	// Init git 
+	// Init git
 	isGitInstalled := CheckIsGitInstalled()
 	if isGitInstalled == false {
 		fmt.Println("git not found. Repository will not be intialized automatically.")
 	}
-
 
 	if isGitInstalled && initGit == "yes" {
 		InitGit(destPath)

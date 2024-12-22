@@ -12,7 +12,7 @@ func CheckIsGitInstalled() bool {
 	if binPath != "" {
 		return true
 	} else {
-		return false 
+		return false
 	}
 }
 

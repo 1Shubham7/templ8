@@ -20,7 +20,7 @@ const logo = `
 
 var (
 	branchName string
-	dir string
+	dir        string
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -39,16 +39,16 @@ Happy coding! ✨
 `,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(logo)
+		fmt.Print(logo)
 		fmt.Println(cmd.Long)
 		if len(args) == 0 {
 			fmt.Println("GitHub repo is required")
 			return
 		}
 		reader := bufio.NewReader(os.Stdin)
-			fmt.Print("Do you want to init git? (yes/no): ")
-			input, _ := reader.ReadString('\n')
-			input = strings.TrimSpace(strings.ToLower(input))
+		fmt.Print("Do you want to init git? (yes/no): ")
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(strings.ToLower(input))
 		Logic(args[0], branchName, input, dir)
 	},
 }
@@ -64,7 +64,7 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	
+
 	// Branch Flag
 	rootCmd.Flags().StringVarP(&branchName, "branch", "b", "", "The name of GitHub repo branch you want to download")
 

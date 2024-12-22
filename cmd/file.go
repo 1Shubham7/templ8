@@ -25,10 +25,9 @@ func DownloadFile(zipPath, fileUrl string) error {
 
 	// write the response body to file
 	_, err = io.Copy(file, response.Body)
-	return err		
+	return err
 }
 
-//
 func Unzip(source, destination string) ([]string, error) {
 	var filenames []string
 
@@ -39,7 +38,7 @@ func Unzip(source, destination string) ([]string, error) {
 	}
 	defer reader.Close()
 
-	for _, file := range reader.File{
+	for _, file := range reader.File {
 		// will use this later on
 		filePath := filepath.Join(destination, file.Name)
 		fmt.Println("The filepath is: ", filePath)
@@ -68,7 +67,7 @@ func Unzip(source, destination string) ([]string, error) {
 		// these flags can be combined using bitwise OR '|'.
 		// file.Mode() ~ 0755
 
-		if err != nil{
+		if err != nil {
 			return filenames, err
 		}
 
@@ -81,8 +80,8 @@ func Unzip(source, destination string) ([]string, error) {
 
 		// not using defer because we want to close this file before we go to next file in loop
 		outputFile.Close()
-		readCloser.Close()	
-		
+		readCloser.Close()
+
 		if err != nil {
 			return filenames, err
 		}
