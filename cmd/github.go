@@ -51,7 +51,9 @@ func CreateTemplate(repoUrl, branch, initGit, destination string) {
 	// download acrhive repo
 	fileUrl := "https://github.com/" + username + "/" + reponame + "/archive/refs/heads/" + branch + ".zip"
 	zipPath := tempDir + "/" + "file.zip"
-	err = DownloadFile(zipPath, fileUrl)
+	fmt.Println("Zippath is: ", zipPath)
+
+	err = downloadFile(zipPath, fileUrl)
 	if err != nil {
 		panic(err)
 	}

@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-func DownloadFile(zipPath, fileUrl string) error {
+func downloadFile(zipPath, fileUrl string) error {
 	response, err := http.Get(fileUrl)
 	if err != nil {
 		return err
