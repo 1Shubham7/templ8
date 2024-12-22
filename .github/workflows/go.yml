@@ -27,7 +27,5 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
         prerelease: false
-        title: Release  ${{ github.ref_name }}
-        automatic_release_tag: "latest"
         files: |
           app/templ8.exe
