@@ -22,14 +22,12 @@ jobs:
       run: go build -v -o app/templ8.exe
 
     - name: Create a Release
-      uses: elgohr/Github-Release-Action@v5
-      env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
+      uses: "marvinpinto/action-automatic-releases@latest"
+
       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
+        prerelease: false
         title: Release  ${{ github.ref_name }}
-        tag: ${{ github.ref_name }}
-        permissions:
-        packages: write
-        contents: write
-        files:
-          app/templify.exe
+        automatic_release_tag: ${{ github.ref_name }}
+        files: |
+          app/templ8.exe
