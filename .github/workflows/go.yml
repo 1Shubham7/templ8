@@ -26,4 +26,5 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
       with:
-        artifacts: app/templ8.exe
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
