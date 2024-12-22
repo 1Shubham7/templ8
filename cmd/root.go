@@ -49,7 +49,7 @@ Happy coding! ✨
 		fmt.Print("Do you want to init git? (yes/no): ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(strings.ToLower(input))
-		Logic(args[0], branchName, input, dir)
+		CreateTemplate(args[0], branchName, input, dir)
 	},
 }
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Logic(repoUrl, branch, initGit, destination string) {
+func CreateTemplate(repoUrl, branch, initGit, destination string) {
 	gitUrl := strings.Split(repoUrl, "/")
 
 	// gitURL e.g. = https://github.com/1Shubham7/templ8
