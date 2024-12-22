@@ -9,39 +9,6 @@ import (
 	"strings"
 )
 
-type GitHubResponse struct {
-	DefaultBranch string `json:"default_branch"`
-}
-
-func GetDefaultBranch(username, repo string) (string, error) {
-	response, err := http.Get("https://api.github.com/repos/" + username + "/" + repo)
-	if err != nil {
-		return "", err
-	}
-
-	data,_ := io.ReadAll(response.Body)
-	var repoDetails GitHubResponse
-	err = json.Unmarshal(data, &repoDetails)
-	if err != nil {
-		return "", err
-	}
-
-	return repoDetails.DefaultBranch, nil
-}
-
-func VerifyBranchName(username, repo, branch string) bool {
-	response, err := http.Get("https://api.github.com/repos/" + username + "/" + repo + "/branches/" + branch)
-	if err != nil {
-		panic(err)
-	}
-
-	if response.StatusCode == http.StatusNotFound {
-		return false
-	}
-
-	return true
-}
-
 func Logic(repoUrl, branch string) {
 	gitUrl := strings.Split(repoUrl, "/")
 
@@ -72,4 +39,19 @@ func Logic(repoUrl, branch string) {
 
 	fmt.Println("final branch:", branch)
 	fmt.Println("final username:", username)
+
+	// create a temp folder
+	tempDir := ".temp"
+	err := os.Mkdir(tempDir, 0755)
+	// Owner: 7 → 4 + 2 + 1 (read, write, and execute)
+	// Group: 5 → 4 + 1 (read and execute)
+	// Others: 5 → 4 + 1 (read and execute)
+	if err != nil {
+		panic(err)
+	}
+
+	// download acrhive repo
+	fileUrl := "https://github.com/" + username + "/" + reponame + "/archive/refs/heads/" + branch + ".zip"
+	zipPath := tempDir + "/" + "file.zip"}
+	DownloadFile(zipPath, fileUrl)
 }
