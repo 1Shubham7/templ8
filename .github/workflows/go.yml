@@ -1,0 +1,28 @@
+name: new release
+
+on:
+  push:
+    tags:
+      - '*'
+      # git tag v1.0.0
+      # git push origin v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+
+    - name: Build
+      run: go build -v -o app/templ8.exe
+
+    - name: New release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: app/templ8.exe
+        token: ${{ secrets.GITHUB_TOKEN }} # you don't have to create this, auto done by GitHub Actions
