@@ -42,13 +42,14 @@ Happy coding! ✨
 		fmt.Print(logo)
 		fmt.Println(cmd.Long)
 		if len(args) == 0 {
-			fmt.Println("GitHub repo is required")
+			fmt.Println("GitHub repo url is required")
 			return
 		}
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Do you want to init git? (yes/no): ")
-		input, _ := reader.ReadString('\n')
-		input = strings.TrimSpace(strings.ToLower(input))
+		input := takeInput()
+		if input == "err" {
+			fmt.Println("sorry, I couldn't understand, try again with (yes/no)")
+			os.Exit(1)
+		}
 		CreateTemplate(args[0], branchName, input, dir)
 	},
 }
@@ -59,6 +60,20 @@ func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
+	}
+}
+
+func takeInput() string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Do you want to init git? (yes/no): ")
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(strings.ToLower(input))
+	if input == "yes" || input == "y" || input == "ye" || input == "yess" {
+		return "yes"
+	} else if input == "no" || input == "n" || input == "noo" {
+		return "no"
+	} else {
+		return "err"
 	}
 }
 
