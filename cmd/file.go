@@ -28,7 +28,7 @@ func downloadFile(zipPath, fileUrl string) error {
 	return err
 }
 
-func Unzip(source, destination string) ([]string, error) {
+func unzip(source, destination string) ([]string, error) {
 	var filenames []string
 
 	// OpenReader will open the Zip file and return a ReadCloser.

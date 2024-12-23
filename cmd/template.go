@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func CreateTemplate(repoUrl, branch, initGit, destination string) {
+func createTemplate(repoUrl, branch, initGit, destination string) {
 	gitUrl := strings.Split(repoUrl, "/")
 
 	// gitURL e.g. = https://github.com/1Shubham7/templ8
@@ -38,6 +38,17 @@ func CreateTemplate(repoUrl, branch, initGit, destination string) {
 	fmt.Println("final branch:", branch)
 	fmt.Println("final username:", username)
 
+	var destPath string
+
+	// if destination not specified
+	if destination == "." {
+		destPath = reponame
+	} else {
+		destPath = destination
+	}
+
+	fmt.Println("Destpath: ", destPath)
+
 	// create a temp folder
 	tempDir := ".temp"
 	err := os.Mkdir(tempDir, 0755)
@@ -52,33 +63,28 @@ func CreateTemplate(repoUrl, branch, initGit, destination string) {
 	fileUrl := "https://github.com/" + username + "/" + reponame + "/archive/refs/heads/" + branch + ".zip"
 	zipPath := tempDir + "/" + "file.zip"
 	fmt.Println("Zippath is: ", zipPath)
+	fmt.Println("Branch here is: ", branch)
 
 	err = downloadFile(zipPath, fileUrl)
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("Everything is fine")
+
 	// unzip the file
 	unzipPath := tempDir + "/" + "unzipped"
-	_, err = Unzip(zipPath, unzipPath)
+	_, err = unzip(zipPath, unzipPath)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Works fine till unzip")
 
 	files, err := os.ReadDir(unzipPath)
 	if err != nil {
 		panic(err)
 	}
 	repoDir := files[0]
-
-	var destPath string
-
-	// if destination not specified
-	if destination == "" {
-		destPath = reponame
-	} else {
-		destPath = destination
-	}
 
 	// move the folder
 	repoDirPath := unzipPath + "/" + repoDir.Name()

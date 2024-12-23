@@ -49,7 +49,7 @@ Happy coding! ✨
 			fmt.Println("sorry, I couldn't understand, try again with (yes/no)")
 			os.Exit(1)
 		}
-		CreateTemplate(args[0], branchName, input, dir)
+		createTemplate(args[0], branchName, input, dir)
 	},
 }
 
