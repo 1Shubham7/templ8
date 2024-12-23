@@ -13,9 +13,6 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 	username := gitUrl[3]
 	reponame := gitUrl[4]
 
-	fmt.Println("init branch:" + branch)
-	fmt.Println("init username:" + username)
-
 	// if branch not specified
 	if branch == "" {
 		defBranch, err := GetDefaultBranch(username, reponame)
@@ -25,9 +22,6 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 		branch = defBranch
 	}
 
-	fmt.Println("New branch:", branch)
-	fmt.Println("New username:", username)
-
 	// if branch is specified
 	doesBranchExists := VerifyBranchName(username, reponame, branch)
 	if !doesBranchExists {
@@ -35,8 +29,8 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 		os.Exit(1)
 	}
 
-	fmt.Println("final branch:", branch)
-	fmt.Println("final username:", username)
+	fmt.Println("Branch specified/Default branch:", branch)
+	fmt.Println("Username:", username)
 
 	var destPath string
 
@@ -47,7 +41,7 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 		destPath = destination
 	}
 
-	fmt.Println("Destpath: ", destPath)
+	fmt.Println("Destination folder specified/ default destination:", destPath)
 
 	// create a temp folder
 	tempDir := ".temp"
@@ -62,15 +56,12 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 	// download acrhive repo
 	fileUrl := "https://github.com/" + username + "/" + reponame + "/archive/refs/heads/" + branch + ".zip"
 	zipPath := tempDir + "/" + "file.zip"
-	fmt.Println("Zippath is: ", zipPath)
-	fmt.Println("Branch here is: ", branch)
-
 	err = downloadFile(zipPath, fileUrl)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println("Everything is fine")
+	fmt.Println("Downloading the compressed file...")
 
 	// unzip the file
 	unzipPath := tempDir + "/" + "unzipped"
@@ -78,13 +69,15 @@ func createTemplate(repoUrl, branch, initGit, destination string) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Works fine till unzip")
+	fmt.Println("Decompressing the file...")
 
 	files, err := os.ReadDir(unzipPath)
 	if err != nil {
 		panic(err)
 	}
 	repoDir := files[0]
+
+	fmt.Println("Moving template to the destination...")
 
 	// move the folder
 	repoDirPath := unzipPath + "/" + repoDir.Name()

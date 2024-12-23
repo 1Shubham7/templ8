@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -41,8 +40,6 @@ func unzip(source, destination string) ([]string, error) {
 	for _, file := range reader.File {
 		// will use this later on
 		filePath := filepath.Join(destination, file.Name)
-		fmt.Println("The filepath is: ", filePath)
-
 		filenames = append(filenames, filePath)
 
 		// if it itself is a dir, then make folder
