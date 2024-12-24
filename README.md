@@ -82,6 +82,11 @@ Follow these steps to install and set up Templ8:
    templ8.exe --help
    ```
 
+9. Additionally you can also rename the templ8.exe to templ8:
+```bash
+mv templ8.exe templ8
+```
+
 You're all set to transform any GitHub repository into a template! 🎉
 
 ## Usage
@@ -89,7 +94,7 @@ You're all set to transform any GitHub repository into a template! 🎉
 Simply call the executable with the URL of the repository you want to use as a template, and the tool will download the latest version of the specified branch into the directory you want and initialize it as a new repository.
 
 ```bash
-templ8.exe https://github.com/1Shubham7/demo-repo-for-templ8
+templ8 https://github.com/1Shubham7/demo-repo-for-templ8
 ```
 
 ### Optional Arguments
@@ -103,5 +108,5 @@ Example:
 
 ```bash
 # This will create a folder called 'new-proj' with the contents of the source repo, specifically the 'dev' branch.
-templ8.exe -b=dev -d=new-proj https://github.com/1Shubham7/demo-repo-for-templ8
+templ8 -b=dev -d=new-proj https://github.com/1Shubham7/demo-repo-for-templ8
 ```
