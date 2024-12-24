@@ -83,9 +83,9 @@ Follow these steps to install and set up Templ8:
    ```
 
 9. Additionally you can also rename the templ8.exe to templ8:
-```bash
-mv templ8.exe templ8
-```
+  ```bash
+  mv templ8.exe templ8
+  ```
 
 You're all set to transform any GitHub repository into a template! 🎉
 
